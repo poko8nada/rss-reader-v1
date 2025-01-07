@@ -20,7 +20,6 @@ async function parse(urlList: string[]): Promise<items[]> {
   const allFeed = await Promise.all(
     urlList.map(async url => {
       const feed = await parser.parseURL(url)
-      console.log(feed)
       return feed.items.map(item => ({
         title: item.title || '',
         content: item.content || '',

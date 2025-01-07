@@ -31,7 +31,7 @@ export async function GET() {
     item.hostname = hostname
     item.hostLink = hostLink
   })
-
+  console.log(hatenaFeed)
   return NextResponse.json(hatenaFeed)
 }
 
