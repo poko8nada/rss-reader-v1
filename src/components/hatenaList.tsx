@@ -1,15 +1,11 @@
-'use client'
-import type { hatenaItems } from '@/app/api/first/route'
+import type { hatenaItems } from '@/app/api/hatena/route'
 import Image from 'next/image'
 import Link from 'next/link'
-import type { Dispatch, SetStateAction } from 'react'
 
 export default ({
   item,
-  setArticle,
 }: {
   item: hatenaItems
-  setArticle: Dispatch<SetStateAction<hatenaItems | null>>
 }) => {
   return (
     <div className={'flex px-7 py-3 gap-4 mb-10'}>
@@ -32,14 +28,7 @@ export default ({
       </div>
       <div className={'w-full'}>
         <h2>
-          <Link
-            href={'#'}
-            onClick={e => {
-              e.preventDefault()
-              setArticle(item)
-            }}
-            className={'hover:underline'}
-          >
+          <Link href={'#'} className={'hover:underline'}>
             {item.title}
           </Link>
         </h2>
