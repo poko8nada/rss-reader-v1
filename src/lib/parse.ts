@@ -1,30 +1,38 @@
 import Parser from 'rss-parser'
 
-
-const rssFeed = [
-  'https://qiita.com/tags/next.js/feed',
-  'https://qiita.com/tags/react/feed',
-  'https://zenn.dev/feed',
-]
-
 type items = {
   title: string
   content: string
   link: string
-  pubDate: string
-  enclosure: string | null
+  pubDate?: string | null
+  date: string
+  thumbnail: string | null
+  enclosure?: string | null
+  'content:encoded'?: string
 }
-
-export default async () => {
-  const parser = new Parser()
-
-  const allFeed = await Promise.all(rssFeed.map(async (url) => {
-    const feed = await parser.parseURL(url)
-    return feed.items as unknown as items[]
-  }))
-
-  return allFeed.flat().sort((a, b) => {
-    return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+async function parse(urlList: string[]): Promise<items[]> {
+  const parser = new Parser({
+    customFields: {
+      item: ['thumbnail', 'content:encoded', 'date'],
+    },
   })
 
+  const allFeed = await Promise.all(
+    urlList.map(async url => {
+      const feed = await parser.parseURL(url)
+      console.log(feed)
+      return feed.items.map(item => ({
+        title: item.title || '',
+        content: item.content || '',
+        link: item.link || '',
+        date: item.date || item.pubDate || '',
+        thumbnail: item.enclosure ? item.enclosure.url : null,
+        'content:encoded': item['content:encoded'] || '',
+      }))
+    }),
+  )
+
+  return allFeed.flat()
 }
+
+export { parse, type items }
