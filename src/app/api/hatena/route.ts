@@ -21,7 +21,7 @@ export async function GET() {
   }))
 
   hatenaFeed.map((item, index) => {
-    item.id = `hatena-${index + 1}`
+    item.id = `h_${index}`
 
     const thumbnailMatch = item['content:encoded']?.match(/<img src="(.+?)"/)
     item.thumbnail = thumbnailMatch ? thumbnailMatch[1] : null
@@ -37,7 +37,6 @@ export async function GET() {
     item.hostname = hostname
     item.hostLink = hostLink
   })
-  console.log(hatenaFeed)
   return NextResponse.json(hatenaFeed)
 }
 

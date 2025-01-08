@@ -14,7 +14,7 @@ export default function FeedProvider({
   useEffect(() => {
     const fetchFeed = async () => {
       setLoading(true)
-      const response = await fetch('/api/hatena')
+      const response = await fetch('/api/hatena', { cache: 'force-cache' })
       const data = await response.json()
       setFeed(data)
       setLoading(false)
