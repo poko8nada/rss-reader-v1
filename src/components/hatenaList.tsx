@@ -28,7 +28,7 @@ export default ({
       </div>
       <div className={'w-full'}>
         <h2>
-          <Link href={'#'} className={'hover:underline'}>
+          <Link href={`hatena/${item.id}`} className={'hover:underline'}>
             {item.title}
           </Link>
         </h2>
