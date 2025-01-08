@@ -36,6 +36,7 @@ export default ({
             href={'#'}
             onClick={e => {
               e.preventDefault()
+              console.log(item)
               setArticle(item)
             }}
             className={'hover:underline'}

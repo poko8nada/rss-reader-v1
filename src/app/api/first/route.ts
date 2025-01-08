@@ -20,6 +20,9 @@ export async function GET() {
     const thumbnailMatch = item['content:encoded']?.match(/<img src="(.+?)"/)
     item.thumbnail = thumbnailMatch ? thumbnailMatch[1] : null
 
+    const formattedContent = item.content.replace(/。/g, '。\r\n')
+    item.content = formattedContent
+
     const bookmarkMatch = item['content:encoded']?.match(
       /<img src="(https:\/\/b\.hatena\.ne\.jp\/entry\/image\/.+?)"/,
     )
@@ -31,7 +34,7 @@ export async function GET() {
     item.hostname = hostname
     item.hostLink = hostLink
   })
-  console.log(hatenaFeed)
+  // console.log(hatenaFeed)
   return NextResponse.json(hatenaFeed)
 }
 
