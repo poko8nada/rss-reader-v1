@@ -1,5 +1,5 @@
 'use client'
-import type { hatenaItems } from '@/app/api/first/route'
+import type { hatenaItems } from '@/app/api/hatena/route'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Dispatch, SetStateAction } from 'react'
@@ -21,11 +21,10 @@ export default ({
           alt=''
         />
         {item.bookmark && (
-          <Image
+          <img
             className={'aspect-auto'}
             src={item.bookmark}
-            width={50}
-            height={15}
+            width={'50px'}
             alt=''
           />
         )}
