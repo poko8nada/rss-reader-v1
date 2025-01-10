@@ -1,8 +1,10 @@
 'use client'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import HatenaList from '../components/hatenaList'
+import Modal from '../components/modal'
 import OverlayLoading from '../components/overlayLoading'
-import type { hatenaItems } from './api/first/route'
+import type { hatenaItems } from './api/hatena/route'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
@@ -12,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     const fetchFeed = async () => {
       setLoading(true)
-      const response = await fetch('/api/first')
+      const response = await fetch('/api/hatena')
       const data = await response.json()
       setFeed(data)
       setLoading(false)
@@ -20,37 +22,18 @@ export default function Home() {
     fetchFeed()
   }, [])
 
+  useEffect(() => {
+    if (article) {
+      document.body.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [article])
+
   return (
-    <div className={'max-w-5xl mx-auto w-full'}>
+    <div className={'max-w-5xl mx-auto w-full'} style={{ minHeight: '96vh' }}>
       {loading && <OverlayLoading />}
-      {article && (
-        <div
-          className={'fixed inset-0 bg-black bg-opacity-50'}
-          onClick={() => {
-            setArticle(null)
-          }}
-          onKeyUp={e => {
-            if (e.key === 'Escape' || e.key === 'Enter') {
-              setArticle(null)
-            }
-          }}
-        >
-          <div className={'fixed inset-0 flex items-center justify-center'}>
-            <div className={'bg-white p-10'}>
-              <h2>{article.title}</h2>
-              <p>{article.content}</p>
-              <button
-                type='button'
-                onClick={() => {
-                  setArticle(null)
-                }}
-              >
-                close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {article && <Modal article={article} setArticle={setArticle} />}
       <main className={'grid md:grid-cols-2 grid-flow-row'}>
         {feed.map((item, index) => (
           <HatenaList
@@ -60,9 +43,6 @@ export default function Home() {
           />
         ))}
       </main>
-      <footer className='row-start-3 flex gap-6 flex-wrap items-center justify-center'>
-        footer
-      </footer>
     </div>
   )
 }

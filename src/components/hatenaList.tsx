@@ -1,5 +1,5 @@
 'use client'
-import type { hatenaItems } from '@/app/api/first/route'
+import type { hatenaItems } from '@/app/api/hatena/route'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Dispatch, SetStateAction } from 'react'
@@ -21,11 +21,10 @@ export default ({
           alt=''
         />
         {item.bookmark && (
-          <Image
+          <img
             className={'aspect-auto'}
             src={item.bookmark}
-            width={50}
-            height={15}
+            width={'50px'}
             alt=''
           />
         )}
@@ -36,6 +35,7 @@ export default ({
             href={'#'}
             onClick={e => {
               e.preventDefault()
+              console.log(item)
               setArticle(item)
             }}
             className={'hover:underline'}
@@ -45,10 +45,19 @@ export default ({
         </h2>
         <Link
           className={'hover:underline text-blue-800'}
-          href={item.hostLink || ''}
+          href={item.link || ''}
           target='_blank'
         >
-          <small className={'leading-none'}>{item.hostname}</small>
+          <small className={'leading-none'}>
+            {item.hostname}{' '}
+            <Image
+              className={'inline'}
+              src='/images/arrow_up_right.svg'
+              alt=''
+              width={14}
+              height={14}
+            />
+          </small>
         </Link>
       </div>
     </div>

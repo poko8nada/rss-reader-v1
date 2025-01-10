@@ -5,15 +5,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'placehold.jp'
+        hostname: 'cdn-ak2.favicon.st-hatena.com',
       },
       {
         protocol: 'https',
-        hostname: 'cdn-ak2.favicon.st-hatena.com'
-      },
-      {
-        protocol: 'https',
-        hostname: 'b.hatena.ne.jp'
+        hostname: 'b.hatena.ne.jp',
       },
     ],
   },
