@@ -5,7 +5,6 @@ type hatenaItems = items & {
   thumbnail: string | null
   bookmark: string | null
   hostname?: string
-  hostLink?: string
 }
 
 export async function GET() {
@@ -18,7 +17,7 @@ export async function GET() {
 
   hatenaFeed.map(item => {
     const thumbnailMatch = item['content:encoded']?.match(/<img src="(.+?)"/)
-    item.thumbnail = thumbnailMatch ? thumbnailMatch[1] : null
+    item.thumbnail = thumbnailMatch ? thumbnailMatch[1] : '/images/no_img.png'
 
     const formattedContent = item.content.replace(/。/g, '。\r\n')
     item.content = formattedContent
@@ -30,9 +29,7 @@ export async function GET() {
     item.bookmark = bookmark
 
     const hostname = new URL(item.link).hostname
-    const hostLink = `https://${hostname}`
     item.hostname = hostname
-    item.hostLink = hostLink
   })
   // console.log(hatenaFeed)
   return NextResponse.json(hatenaFeed)

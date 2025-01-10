@@ -45,10 +45,19 @@ export default ({
         </h2>
         <Link
           className={'hover:underline text-blue-800'}
-          href={item.hostLink || ''}
+          href={item.link || ''}
           target='_blank'
         >
-          <small className={'leading-none'}>{item.hostname}</small>
+          <small className={'leading-none'}>
+            {item.hostname}{' '}
+            <Image
+              className={'inline'}
+              src='/images/arrow_up_right.svg'
+              alt=''
+              width={14}
+              height={14}
+            />
+          </small>
         </Link>
       </div>
     </div>
