@@ -19,7 +19,7 @@ export async function GET() {
     const thumbnailMatch = item['content:encoded']?.match(/<img src="(.+?)"/)
     item.thumbnail = thumbnailMatch ? thumbnailMatch[1] : '/images/no_img.png'
 
-    const formattedContent = item.content.replace(/。/g, '。\r\n')
+    const formattedContent = item.content.replace(/。{1,10}/g, '。\r\n')
     item.content = formattedContent
 
     const bookmarkMatch = item['content:encoded']?.match(

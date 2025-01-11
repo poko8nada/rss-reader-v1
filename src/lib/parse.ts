@@ -22,10 +22,13 @@ async function parse(urlList: string[]): Promise<items[]> {
       const feed = await parser.parseURL(url)
       console.log(feed)
       return feed.items.map(item => ({
-        title: item.title || '',
+        title:
+          (item.title && item.title.length > 100
+            ? `${item.title.slice(0, 100)}...`
+            : item.title) || '',
         content: item.content || '',
         link: item.link || '',
-        date: item.date || item.pubDate || '',
+        date: new Date(item.date || item.pubDate).toLocaleString() || '',
         thumbnail: item.enclosure ? item.enclosure.url : null,
         'content:encoded': item['content:encoded'] || '',
       }))

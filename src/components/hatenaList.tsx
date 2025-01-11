@@ -1,5 +1,5 @@
 'use client'
-import type { hatenaItems } from '@/app/api/hatena/route'
+import type { feedItems } from '@/app/page'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Dispatch, SetStateAction } from 'react'
@@ -8,11 +8,11 @@ export default ({
   item,
   setArticle,
 }: {
-  item: hatenaItems
-  setArticle: Dispatch<SetStateAction<hatenaItems | null>>
+  item: feedItems
+  setArticle: Dispatch<SetStateAction<feedItems | null>>
 }) => {
   return (
-    <div className={'flex px-7 py-3 gap-4 mb-10'}>
+    <li className={'flex px-7 py-3 gap-4 mb-10'}>
       <div className={'flex flex-col gap-2 items-center'}>
         <Image
           src={item.thumbnail || 'https://placehold.jp/150x150.png'}
@@ -60,6 +60,6 @@ export default ({
           </small>
         </Link>
       </div>
-    </div>
+    </li>
   )
 }

@@ -13,12 +13,21 @@ export default ({
   setArticle: Dispatch<SetStateAction<hatenaItems | null>>
 }>) => {
   const [isOpen, setIsOpen] = useState(false)
+
   useEffect(() => {
     if (!article) return
     setTimeout(() => {
       setIsOpen(true)
     }, 100)
   }, [article])
+
+  useEffect(() => {
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        setArticle(null)
+      }
+    })
+  }, [setArticle])
 
   const elem = (
     <div

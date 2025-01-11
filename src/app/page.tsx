@@ -1,47 +1,29 @@
 'use client'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import HatenaList from '../components/hatenaList'
+import type { hatenaItems } from '@/app/api/hatena/route'
+import useArticle from '@/hooks/useArticle'
+import useFeed from '@/hooks/useFeed'
+import FeedSection from '../components/feedSection'
 import Modal from '../components/modal'
 import OverlayLoading from '../components/overlayLoading'
-import type { hatenaItems } from './api/hatena/route'
+
+export type feedItems = hatenaItems & {}
 
 export default function Home() {
-  const [loading, setLoading] = useState(true)
-  const [feed, setFeed] = useState<hatenaItems[]>([])
-  const [article, setArticle] = useState<hatenaItems | null>(null)
+  const { feedChunk: hatenaFeed, loading: hatenaLoading } =
+    useFeed('/api/hatena')
 
-  useEffect(() => {
-    const fetchFeed = async () => {
-      setLoading(true)
-      const response = await fetch('/api/hatena')
-      const data = await response.json()
-      setFeed(data)
-      setLoading(false)
-    }
-    fetchFeed()
-  }, [])
-
-  useEffect(() => {
-    if (article) {
-      document.body.classList.add('overflow-hidden')
-    } else {
-      document.body.classList.remove('overflow-hidden')
-    }
-  }, [article])
+  const { article, setArticle } = useArticle()
 
   return (
     <div className={'max-w-5xl mx-auto w-full'} style={{ minHeight: '96vh' }}>
-      {loading && <OverlayLoading />}
+      {hatenaLoading && <OverlayLoading />}
       {article && <Modal article={article} setArticle={setArticle} />}
-      <main className={'grid md:grid-cols-2 grid-flow-row'}>
-        {feed.map((item, index) => (
-          <HatenaList
-            key={`${index}-${item.title}`}
-            item={item}
-            setArticle={setArticle}
-          />
-        ))}
+      <main>
+        <FeedSection
+          initialChunk={hatenaFeed[0]}
+          feedChunk={hatenaFeed}
+          setArticle={setArticle}
+        />
       </main>
     </div>
   )
