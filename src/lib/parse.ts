@@ -9,11 +9,13 @@ type items = {
   thumbnail: string | null
   enclosure?: string | null
   'content:encoded'?: string
+  creator?: string
+  author?: string
 }
 async function parse(urlList: string[]): Promise<items[]> {
   const parser = new Parser({
     customFields: {
-      item: ['thumbnail', 'content:encoded', 'date'],
+      item: ['thumbnail', 'content:encoded', 'date', 'creator', 'author'],
     },
   })
 
@@ -31,6 +33,7 @@ async function parse(urlList: string[]): Promise<items[]> {
         date: new Date(item.date || item.pubDate).toLocaleString() || '',
         thumbnail: item.enclosure ? item.enclosure.url : null,
         'content:encoded': item['content:encoded'] || '',
+        creator: item.creator || item.author || '',
       }))
     }),
   )
