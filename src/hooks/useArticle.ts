@@ -1,8 +1,8 @@
-import type { hatenaItems } from '@/app/api/hatena/route'
+import type { feedItems } from '@/app/page'
 import { useEffect, useState } from 'react'
 
 export default function useArticle() {
-  const [article, setArticle] = useState<hatenaItems | null>(null)
+  const [article, setArticle] = useState<feedItems | null>(null)
 
   useEffect(() => {
     if (article) {
