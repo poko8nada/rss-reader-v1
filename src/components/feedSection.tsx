@@ -33,8 +33,10 @@ export default ({
     ))
   }
   return (
-    <section>
-      <ul className={'grid md:grid-cols-2 grid-flow-row'}>
+    <section className='px-3 mx-5 my-10 h-96 overflow-y-scroll rounded-xl border-2 border-gray-200 shadow-inner'>
+      <ul
+        className={'grid md:grid-cols-2 grid-flow-row divide-y-2 md:divide-y-0'}
+      >
         {mapFeed(initialChunk)}
         {mapFeed(chunk)}
       </ul>
