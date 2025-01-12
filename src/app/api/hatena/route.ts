@@ -9,13 +9,13 @@ type hatenaItems = items & {
 
 export async function GET() {
   const feed: items[] = await parse(['https://b.hatena.ne.jp/hotentry.rss'])
-  const hatenaFeed: hatenaItems[] = feed.map(item => ({
+  const formattedFeed: hatenaItems[] = feed.map(item => ({
     ...item,
     thumbnail: null,
     bookmark: null,
   }))
 
-  hatenaFeed.map(item => {
+  formattedFeed.map(item => {
     const thumbnailMatch = item['content:encoded']?.match(/<img src="(.+?)"/)
     item.thumbnail = thumbnailMatch ? thumbnailMatch[1] : '/images/no_img.png'
 
@@ -31,8 +31,8 @@ export async function GET() {
     const hostname = new URL(item.link).hostname
     item.hostname = hostname
   })
-  // console.log(hatenaFeed)
-  return NextResponse.json(hatenaFeed)
+  // console.log(formattedFeed)
+  return NextResponse.json(formattedFeed)
 }
 
 export type { hatenaItems }
