@@ -13,13 +13,8 @@ export default ({
 }) => {
   return (
     <li className={'flex px-2 py-6 gap-3'}>
-      <div className={'flex flex-col gap-2 items-center'}>
-        <Image
-          src={item.thumbnail || 'https://placehold.jp/150x150.png'}
-          width={38}
-          height={38}
-          alt=''
-        />
+      <div className={'flex flex-col gap-2 items-center shrink-0'}>
+        <Image src={item.thumbnail} width={38} height={38} alt='' />
         {item.bookmark && (
           <img
             className={'aspect-auto'}
@@ -48,10 +43,11 @@ export default ({
           href={item.link || ''}
           target='_blank'
         >
-          <small className={'leading-none'}>
-            {item.hostname}{' '}
+          <small className={'relative'}>
+            {item.hostname}
+            {item.creator ? `@${item.creator}` : ''}
             <Image
-              className={'inline'}
+              className={'inline absolute top-1/2 -translate-y-1/2'}
               src='/images/arrow_up_right.svg'
               alt=''
               width={14}
