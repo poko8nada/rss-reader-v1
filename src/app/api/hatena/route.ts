@@ -30,6 +30,8 @@ export async function GET() {
 
     const hostname = new URL(item.link).hostname
     item.hostname = hostname
+
+    item.feedTitle = 'はてなブックマーク'
   })
   // console.log(formattedFeed)
   return NextResponse.json(formattedFeed)

@@ -12,7 +12,7 @@ export default ({
   setArticle: Dispatch<SetStateAction<feedItems | null>>
 }) => {
   return (
-    <li className={'flex px-2 py-6 gap-3'}>
+    <li className={'flex px-2 md:px-5 py-4 md:py-6 gap-3 bg-white'}>
       <div className={'flex flex-col gap-2 items-center shrink-0'}>
         <Image src={item.thumbnail} width={38} height={38} alt='' />
         {item.bookmark && (
@@ -25,7 +25,7 @@ export default ({
         )}
       </div>
       <div className={'w-full'}>
-        <h2 style={{ fontSize: '.95em' }}>
+        <h3 style={{ fontSize: '.95em' }}>
           <Link
             href={'#'}
             onClick={e => {
@@ -37,7 +37,7 @@ export default ({
           >
             {item.title}
           </Link>
-        </h2>
+        </h3>
         <Link
           className={'hover:underline text-blue-800'}
           href={item.link || ''}
