@@ -12,25 +12,20 @@ export default ({
   setArticle: Dispatch<SetStateAction<feedItems | null>>
 }) => {
   return (
-    <li className={'flex px-7 py-3 gap-4 mb-10'}>
-      <div className={'flex flex-col gap-2 items-center'}>
-        <Image
-          src={item.thumbnail || 'https://placehold.jp/150x150.png'}
-          width={50}
-          height={50}
-          alt=''
-        />
+    <li className={'flex px-2 py-6 gap-3'}>
+      <div className={'flex flex-col gap-2 items-center shrink-0'}>
+        <Image src={item.thumbnail} width={38} height={38} alt='' />
         {item.bookmark && (
           <img
             className={'aspect-auto'}
             src={item.bookmark}
-            width={'50px'}
+            width={'42px'}
             alt=''
           />
         )}
       </div>
       <div className={'w-full'}>
-        <h2>
+        <h2 style={{ fontSize: '.95em' }}>
           <Link
             href={'#'}
             onClick={e => {
@@ -48,10 +43,11 @@ export default ({
           href={item.link || ''}
           target='_blank'
         >
-          <small className={'leading-none'}>
-            {item.hostname}{' '}
+          <small className={'relative'}>
+            {item.hostname}
+            {item.creator ? `@${item.creator}` : ''}
             <Image
-              className={'inline'}
+              className={'inline absolute top-1/2 -translate-y-1/2'}
               src='/images/arrow_up_right.svg'
               alt=''
               width={14}

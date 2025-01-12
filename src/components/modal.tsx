@@ -14,6 +14,12 @@ export default ({
 }>) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  const reject = () => {
+    setIsOpen(false)
+    setTimeout(() => {
+      setArticle(null)
+    }, 100)
+  }
   useEffect(() => {
     if (!article) return
     setTimeout(() => {
@@ -24,7 +30,10 @@ export default ({
   useEffect(() => {
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
-        setArticle(null)
+        setIsOpen(false)
+        setTimeout(() => {
+          setArticle(null)
+        }, 100)
       }
     })
   }, [setArticle])
@@ -34,21 +43,31 @@ export default ({
       className={
         'transition-all duration-300 ease-in-out mx-auto fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
       }
-      onClick={e => e.target === e.currentTarget && setArticle(null)}
-      onKeyUp={e => e.target === e.currentTarget && setArticle(null)}
+      onClick={e => e.target === e.currentTarget && reject()}
+      onKeyUp={e => e.target === e.currentTarget && reject()}
     >
       <dialog
-        className={`${isOpen ? 'opacity-100' : 'opacity-0 translate-x-10'} transition-all ease-out duration-300 fixed flex items-center justify-center max-w-2xl rounded-lg shadow-lg`}
+        className={`${isOpen ? 'opacity-100' : 'opacity-0 translate-x-10'} transition-all ease-out duration-300 flex items-center justify-center max-w-2xl rounded-lg shadow-lg relative overflow-auto`}
         style={{ width: '94vw' }}
       >
-        <div className='bg-white p-6 rounded-lg shadow-lg w-full'>
+        <button
+          type='button'
+          className='absolute top-3 right-3'
+          onClick={() => reject()}
+        >
+          <Image src='/images/close.svg' width={20} height={20} alt='close' />
+        </button>
+        <div
+          className='bg-white p-6 rounded-lg shadow-lg w-full overflow-y-scroll'
+          style={{ maxHeight: '94vh' }}
+        >
           <div className='flex items-center mb-4 gap-2 sm:gap-4'>
             <div className='flex-shrink-0 h-14 flex flex-col items-center justify-center'>
               <Image
                 className={'aspect-auto m-auto block'}
                 src={article.thumbnail || '/images/no_img.png'}
-                width={36}
-                height={36}
+                width={40}
+                height={40}
                 alt=''
               />
               {article.bookmark && (
@@ -60,17 +79,26 @@ export default ({
                 />
               )}
             </div>
-            <h1
-              className='text-lg font-bold flex-1 sm:whitespace-normal whitespace-nowrap overflow-hidden'
-              style={{ textOverflow: 'ellipsis' }}
-            >
-              {article.title}
-            </h1>
+            <div className='flex flex-col min-w-0'>
+              <h2
+                className='font-bold sm:whitespace-normal whitespace-nowrap overflow-hidden'
+                style={{ textOverflow: 'ellipsis' }}
+              >
+                {article.title}
+              </h2>
+              {article.creator && (
+                <p className='text-sm text-gray-500'>@{article.creator}</p>
+              )}
+            </div>
           </div>
-          <p className='text-sm text-gray-500 mb-10'>{article.date}</p>
+          <p className='text-sm text-gray-500 mb-4'>{article.date}</p>
           <div className='text-base leading-relaxed mb-10'>
             {article.content.split('\r\n').map(content => (
-              <p className='mb-2 sm:mb-4' key={content.slice(0, 10)}>
+              <p
+                className='mb-2 sm:mb-4'
+                style={{ fontSize: '.95em' }}
+                key={content.slice(0, 10)}
+              >
                 {content}
               </p>
             ))}
@@ -80,11 +108,12 @@ export default ({
               href={article.link}
               target='_blank'
               rel='noreferrer'
-              className='text-blue-800 hover:underline'
+              className='text-blue-800 hover:underline relative mr-5'
+              style={{ fontSize: '.95em' }}
             >
-              続きを読む(外部リンク)
+              続きを読む(外部サイト)
               <Image
-                className={'inline'}
+                className={'inline absolute top-1/2 -translate-y-1/2'}
                 src='/images/arrow_up_right.svg'
                 alt=''
                 width={20}

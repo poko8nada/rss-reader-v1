@@ -2,7 +2,7 @@ import type { feedItems } from '@/app/page'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
 import FeedBtn from './feedBtn'
-import HatenaList from './hatenaList'
+import FeedItem from './feedItem'
 
 export default ({
   initialChunk,
@@ -25,7 +25,7 @@ export default ({
   const mapFeed = (feed: feedItems[]) => {
     if (!feed) return
     return feed.map((item, index) => (
-      <HatenaList
+      <FeedItem
         key={`${index}-${item.title}`}
         item={item}
         setArticle={setArticle}
@@ -33,8 +33,10 @@ export default ({
     ))
   }
   return (
-    <section>
-      <ul className={'grid md:grid-cols-2 grid-flow-row'}>
+    <section className='px-3 mx-5 my-10 h-96 overflow-y-scroll rounded-xl border-2 border-gray-200 shadow-inner'>
+      <ul
+        className={'grid md:grid-cols-2 grid-flow-row divide-y-2 md:divide-y-0'}
+      >
         {mapFeed(initialChunk)}
         {mapFeed(chunk)}
       </ul>
