@@ -1,9 +1,8 @@
 import { type items, parse } from '@/lib/parse'
 import { NextResponse } from 'next/server'
 
-type hatenaItems = items & {
-  thumbnail: string | null
-  bookmark: string | null
+type zennAndQiitaItems = items & {
+  // thumbnail: string | null
   hostname?: string
 }
 
@@ -12,30 +11,33 @@ export async function GET() {
     'https://zenn.dev/feed',
     'https://qiita.com/popular-items/feed.atom',
   ])
-  const hatenaFeed: hatenaItems[] = feed.map(item => ({
-    ...item,
-    thumbnail: null,
-    bookmark: null,
-  }))
+  const formattedFeed: zennAndQiitaItems[] = feed
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .map(item => ({
+      ...item,
+      hostname: '',
+    }))
 
-  hatenaFeed.map(item => {
-    const thumbnailMatch = item['content:encoded']?.match(/<img src="(.+?)"/)
-    item.thumbnail = thumbnailMatch ? thumbnailMatch[1] : '/images/no_img.png'
-
+  formattedFeed.map(item => {
     const formattedContent = item.content.replace(/。{1,10}/g, '。\r\n')
     item.content = formattedContent
 
-    const bookmarkMatch = item['content:encoded']?.match(
-      /<img src="(https:\/\/b\.hatena\.ne\.jp\/entry\/image\/.+?)"/,
-    )
-    const bookmark = bookmarkMatch ? bookmarkMatch[1] : null
-    item.bookmark = bookmark
+    const thumbnailMatch = () => {
+      if (/zenn/g.test(item.link)) {
+        return '/images/zenn-icon.svg'
+      }
+      if (/qiita/g.test(item.link)) {
+        return '/images/qiita-icon.png'
+      }
+      return '/images/no_img.png'
+    }
+    item.thumbnail = thumbnailMatch()
 
     const hostname = new URL(item.link).hostname
     item.hostname = hostname
   })
-  // console.log(hatenaFeed)
-  return NextResponse.json(hatenaFeed)
+  // console.log(formattedFeed)
+  return NextResponse.json(formattedFeed)
 }
 
-export type { hatenaItems }
+export type { zennAndQiitaItems }

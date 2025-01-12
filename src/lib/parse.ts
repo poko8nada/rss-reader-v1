@@ -31,7 +31,7 @@ async function parse(urlList: string[]): Promise<items[]> {
     urlList.map(async url => {
       const feed = await parser.parseURL(url)
       return feed.items.map(item => {
-        console.log(item.enclosure)
+        console.log(item)
         return {
           title:
             (item.title && item.title.length > 100

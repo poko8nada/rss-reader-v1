@@ -79,12 +79,17 @@ export default ({
                 />
               )}
             </div>
-            <h2
-              className='font-bold flex-1 sm:whitespace-normal whitespace-nowrap overflow-hidden'
-              style={{ textOverflow: 'ellipsis' }}
-            >
-              {article.title}
-            </h2>
+            <div className='flex flex-col min-w-0'>
+              <h2
+                className='font-bold sm:whitespace-normal whitespace-nowrap overflow-hidden'
+                style={{ textOverflow: 'ellipsis' }}
+              >
+                {article.title}
+              </h2>
+              {article.creator && (
+                <p className='text-sm text-gray-500'>@{article.creator}</p>
+              )}
+            </div>
           </div>
           <p className='text-sm text-gray-500 mb-4'>{article.date}</p>
           <div className='text-base leading-relaxed mb-10'>
@@ -103,12 +108,12 @@ export default ({
               href={article.link}
               target='_blank'
               rel='noreferrer'
-              className='text-blue-800 hover:underline'
+              className='text-blue-800 hover:underline relative mr-5'
               style={{ fontSize: '.95em' }}
             >
-              続きを読む(外部リンク)
+              続きを読む(外部サイト)
               <Image
-                className={'inline'}
+                className={'inline absolute top-1/2 -translate-y-1/2'}
                 src='/images/arrow_up_right.svg'
                 alt=''
                 width={20}
