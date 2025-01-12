@@ -12,7 +12,7 @@ export default ({
   setArticle: Dispatch<SetStateAction<feedItems | null>>
 }) => {
   return (
-    <li className={'flex px-2 py-6 gap-3'}>
+    <li className={'flex px-2 md:px-5 py-4 md:py-6 gap-3 bg-white'}>
       <div className={'flex flex-col gap-2 items-center shrink-0'}>
         <Image src={item.thumbnail} width={38} height={38} alt='' />
         {item.bookmark && (
