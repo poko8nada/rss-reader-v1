@@ -32,11 +32,15 @@ export default ({
       />
     ))
   }
+  const getFeedTitle = () => {
+    if (!initialChunk) return
+    return initialChunk[0].feedTitle
+  }
   return (
     // <section className='px-3 mx-5 my-10 h-96 overflow-y-scroll rounded-xl border-2 border-gray-200 shadow-inner'>
     <section className='mx-5 my-10'>
       <header className='max-w-80 w-1/2 pl-3 pt-2  rounded-t-md bg-gray-300'>
-        test test
+        <h2 className='text-gray-800'>{getFeedTitle()}</h2>
       </header>
       <div className='p-2 bg-gray-300 rounded-lg rounded-tl-none'>
         <ul

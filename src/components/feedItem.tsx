@@ -25,7 +25,7 @@ export default ({
         )}
       </div>
       <div className={'w-full'}>
-        <h2 style={{ fontSize: '.95em' }}>
+        <h3 style={{ fontSize: '.95em' }}>
           <Link
             href={'#'}
             onClick={e => {
@@ -37,7 +37,7 @@ export default ({
           >
             {item.title}
           </Link>
-        </h2>
+        </h3>
         <Link
           className={'hover:underline text-blue-800'}
           href={item.link || ''}

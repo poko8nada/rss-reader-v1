@@ -12,6 +12,7 @@ type items = {
   creator?: string
   author?: string
   heroImage?: string
+  feedTitle?: string
 }
 async function parse(urlList: string[]): Promise<items[]> {
   const parser = new Parser({
@@ -23,6 +24,7 @@ async function parse(urlList: string[]): Promise<items[]> {
         'creator',
         'author',
         'heroImage',
+        'feedTitle',
       ],
     },
   })
@@ -44,6 +46,7 @@ async function parse(urlList: string[]): Promise<items[]> {
           heroImage: item.enclosure ? item.enclosure.url : '',
           'content:encoded': item['content:encoded'] || '',
           creator: item.creator || item.author || '',
+          feedTitle: item.feedTitle || '',
         }
       })
     }),

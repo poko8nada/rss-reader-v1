@@ -80,12 +80,12 @@ export default ({
               )}
             </div>
             <div className='flex flex-col min-w-0'>
-              <h2
+              <h3
                 className='font-bold sm:whitespace-normal whitespace-nowrap overflow-hidden'
                 style={{ textOverflow: 'ellipsis' }}
               >
                 {article.title}
-              </h2>
+              </h3>
               {article.creator && (
                 <p className='text-sm text-gray-500'>@{article.creator}</p>
               )}
