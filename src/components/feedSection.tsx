@@ -2,7 +2,7 @@ import type { feedItems } from '@/app/page'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
 import FeedBtn from './feedBtn'
-import HatenaList from './hatenaList'
+import FeedItem from './feedItem'
 
 export default ({
   initialChunk,
@@ -25,7 +25,7 @@ export default ({
   const mapFeed = (feed: feedItems[]) => {
     if (!feed) return
     return feed.map((item, index) => (
-      <HatenaList
+      <FeedItem
         key={`${index}-${item.title}`}
         item={item}
         setArticle={setArticle}
