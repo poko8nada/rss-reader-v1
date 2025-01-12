@@ -11,6 +11,9 @@ export type feedItems = hatenaItems & {}
 export default function Home() {
   const { feedChunk: hatenaFeed, loading: hatenaLoading } =
     useFeed('/api/hatena')
+
+  const { feedChunk: techFeed, loading: techLoading } = useFeed('/api/tech')
+
   const { feedChunk: zennAndQiitaFeed, loading: zennAndQiitaLoading } =
     useFeed('/api/zennAndQiita')
 
@@ -24,6 +27,11 @@ export default function Home() {
         <FeedSection
           initialChunk={hatenaFeed[0]}
           feedChunk={hatenaFeed}
+          setArticle={setArticle}
+        />
+        <FeedSection
+          initialChunk={techFeed[0]}
+          feedChunk={techFeed}
           setArticle={setArticle}
         />
         <FeedSection
