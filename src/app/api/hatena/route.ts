@@ -2,8 +2,8 @@ import { type items, parse } from '@/lib/parse'
 import { NextResponse } from 'next/server'
 
 type hatenaItems = items & {
-  thumbnail: string | null
-  bookmark: string | null
+  thumbnail: string
+  bookmark: string
   hostname?: string
 }
 
@@ -11,8 +11,8 @@ export async function GET() {
   const feed: items[] = await parse(['https://b.hatena.ne.jp/hotentry.rss'])
   const formattedFeed: hatenaItems[] = feed.map(item => ({
     ...item,
-    thumbnail: null,
-    bookmark: null,
+    thumbnail: '',
+    bookmark: '',
   }))
 
   formattedFeed.map(item => {
@@ -25,7 +25,7 @@ export async function GET() {
     const bookmarkMatch = item['content:encoded']?.match(
       /<img src="(https:\/\/b\.hatena\.ne\.jp\/entry\/image\/.+?)"/,
     )
-    const bookmark = bookmarkMatch ? bookmarkMatch[1] : null
+    const bookmark = bookmarkMatch ? bookmarkMatch[1] : ''
     item.bookmark = bookmark
 
     const hostname = new URL(item.link).hostname
