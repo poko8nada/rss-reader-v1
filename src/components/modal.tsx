@@ -97,7 +97,7 @@ export default ({
               <p
                 className='mb-2 sm:mb-4'
                 style={{ fontSize: '.95em' }}
-                key={content.slice(0, 10)}
+                key={`${Math.random().toString(36).slice(2, 11)}`}
               >
                 {content}
               </p>
