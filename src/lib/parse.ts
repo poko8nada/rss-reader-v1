@@ -13,6 +13,7 @@ type items = {
   author?: string
   heroImage?: string
   feedTitle?: string
+  isRead: boolean
 }
 async function parse(urlList: string[]): Promise<items[]> {
   const parser = new Parser({
@@ -25,6 +26,7 @@ async function parse(urlList: string[]): Promise<items[]> {
         'author',
         'heroImage',
         'feedTitle',
+        'isRead',
       ],
     },
   })
@@ -47,6 +49,7 @@ async function parse(urlList: string[]): Promise<items[]> {
           'content:encoded': item['content:encoded'] || '',
           creator: item.creator || item.author || '',
           feedTitle: item.feedTitle || '',
+          isRead: false,
         }
       })
     }),
